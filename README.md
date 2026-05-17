@@ -4,6 +4,10 @@ Méthode sky et Terror
 
 comment courir ce script :
 
+ping -c 4 google.com
+
+pkg install git
+
 pkg upgrade && pkg update 
 
 pkg install python 
