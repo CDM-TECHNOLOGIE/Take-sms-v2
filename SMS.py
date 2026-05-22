@@ -1,11 +1,11 @@
-import smtplib
+    import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 
 # ========= CONFIGURATION =========
 GMAIL_USER = "ablainpierre@gmail.com"
 GMAIL_APP_PASSWORD = "votre_mot_de_passe_app"  # Mot de passe d'application Gmail
-TARGET_NUMBER = "+509xxxxxxx"  # Numéro cible à filtrer
+TARGET_NUMBER = " "  # Espace laissé pour le numéro
 TO_EMAIL = "destinataire@email.com"  # Email de destination
 
 # ========= FONCTION POUR RÉCUPÉRER LES SMS =========
@@ -83,6 +83,18 @@ def send_email(file_path):
 
 # ========= PROGRAMME PRINCIPAL =========
 def main():
+    global TARGET_NUMBER
+    
+    # Demander le numéro à l'utilisateur
+    print("=== CDM Tech - Sauvegarde SMS ===")
+    user_input = input("Entrez le numéro de téléphone (ex: +509xxxxxxxx) : ").strip()
+    
+    if user_input:
+        TARGET_NUMBER = user_input
+        print(f"✅ Numéro configuré : {TARGET_NUMBER}")
+    else:
+        print("❌ Aucun numéro saisi. Utilisation du numéro par défaut.")
+    
     try:
         sms = get_sms()
         
@@ -90,7 +102,7 @@ def main():
             print("❌ Aucun SMS trouvé.")
             return
         
-        # Filtrage des SMS du numéro cible (optionnel)
+        # Filtrage des SMS du numéro cible
         filtered_sms = [msg for msg in sms if msg.get('number', '').replace(' ', '').replace('+', '') == 
                        TARGET_NUMBER.replace(' ', '').replace('+', '')]
         
@@ -134,4 +146,4 @@ if __name__ == "__main__":
     main()
     
     # Exemple d'utilisation de la fonction simple
-    # send_simple_email("CDM SMS", "À NOUS LA TECH")
+    # send_simple_email("CDM SMS", "À NOUS LA TECH")        
